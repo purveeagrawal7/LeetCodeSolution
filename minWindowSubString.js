@@ -3,7 +3,7 @@
  * @param {string} t
  * @return {string}
  */
-var minWindow = function(s, t) {
+ var minWindow = function(s, t) {
     if(s.length == 0 || t.length == 0) return "";
     let patMap = {};
     let expectedCount = 0;
@@ -15,16 +15,15 @@ var minWindow = function(s, t) {
     for(let i = 0; i<t.length; i++){
         patMap[t.charAt(i)] = patMap[t.charAt(i)] ? patMap[t.charAt(i)] + 1 : 1;
     }
+    
     expectedCount = Object.keys(patMap).length;
-
-    console.log("expectedCount::", expectedCount)
     for(let right = 0; right < s.length; right++){
         if(t.includes(s.charAt(right))){
             patMap[s.charAt(right)] = patMap[s.charAt(right)] -1;
             if(patMap[s.charAt(right)] == 0){
                 expectedCount--;
             }
-            while(expectedCount == 0){
+            while(expectedCount == 0 && left<=right){
                 if((right-left)+1 < minLength){
                     minLength = (right - left )+ 1;
                     minLeft = left;
@@ -38,12 +37,19 @@ var minWindow = function(s, t) {
                 left ++;
             }
         }
+        else{
+             if(expectedCount != 0 && right == s.length-1 && minLength == Infinity){
+                return("")
+            }
+        }
     }
-    return(s.substr(minLeft, minLeft+minLength))
+    return(minLength == Infinity ? "" : s.substr(minLeft, minLength))
     }
     else{
         return("")
     }
 
 }
- 
+
+// console.log("output:::",minWindow("babb","baba"));
+//console.log("output:::",minWindow("bc","b"));
