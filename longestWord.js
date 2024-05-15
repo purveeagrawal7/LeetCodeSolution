@@ -29,5 +29,5 @@ var longestWord = function(words) {
        }
     }
 
-    return largestValues.sort()[0] ? largestValues.sort()[0] : ""
+    return largestValues[0] ? largestValues[0] : ""
 };
